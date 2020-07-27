@@ -1,6 +1,11 @@
 import { MiddlewareParams } from '../../types/express.extends';
+import { operatorMessage, returnObject, returnPageList } from '../../utils/const';
 const fn: MiddlewareParams = function (req, res) {
-  console.log(req.userId);
-  res.send('Hello word');
+  returnPageList<{}>({
+    res,
+    data: [{}],
+    page: 1,
+    per_page: 10
+  });
 };
 export default fn;
