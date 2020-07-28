@@ -2,6 +2,7 @@ import { ResponseWithBody } from './express.extends';
 
 export interface ReturnBaseData {
   res: ResponseWithBody;
+  statusCode: number;
 }
 
 export interface ReturnOperatorData extends ReturnBaseData {
