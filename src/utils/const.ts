@@ -7,6 +7,6 @@ export function returnObject({ res, message, data, status }: ReturnObjectData) {
   res.json({ message, data, status });
 }
 
-export function returnPageList<T>({ res, data, page, per_page }: ReturnPageData<T>) {
-  res.json({ data, page, per_page });
+export function returnPageList<T>({ res, data, page, per_page, total }: ReturnPageData<T>) {
+  res.json({ data, page, per_page, total });
 }
