@@ -31,5 +31,4 @@ export default function (req: RequestWithBody, res: ResponseWithBody, next: Next
       detail: 'Unauthenticated.'
     });
   }
-  next();
 }
