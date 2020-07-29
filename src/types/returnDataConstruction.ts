@@ -3,6 +3,7 @@ import { ResponseWithBody } from './express.extends';
 export interface ReturnBaseData {
   res: ResponseWithBody;
   statusCode: number;
+  token?: string;
 }
 
 export interface ReturnOperatorData extends ReturnBaseData {

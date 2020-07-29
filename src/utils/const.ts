@@ -3,8 +3,8 @@ export function operatorMessage({ res, message, status, statusCode }: ReturnOper
   res.json({ message, status, statusCode });
 }
 
-export function returnObject({ res, message, data, status, statusCode }: ReturnObjectData) {
-  res.json({ message, data, status, statusCode });
+export function returnObject({ res, message, data, status, statusCode, token }: ReturnObjectData) {
+  res.json({ message, data, status, statusCode, token });
 }
 
 export function returnPageList<T>({ res, data, page, per_page, total, statusCode }: ReturnPageData<T>) {
