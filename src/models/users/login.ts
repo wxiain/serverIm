@@ -2,6 +2,7 @@ import db from '../../database/db';
 import { MiddlewareParams } from '../../types/express.extends';
 import { UsersLogin } from '../../types/users';
 import { returnObject } from '../../utils/const';
+import create from '../../middlewares/jwt/create';
 
 const Login: MiddlewareParams = (req, res) => {
   let params: UsersLogin = req.body;
@@ -10,6 +11,7 @@ const Login: MiddlewareParams = (req, res) => {
       let isLogin = !!result.length;
       let statusCode = isLogin ? 200 : 401;
       let data = isLogin ? result[0] : {};
+      let token = isLogin ? create({ id: data.id }) : '';
       Reflect.deleteProperty(data, 'password');
       res.status(statusCode);
       returnObject({
@@ -17,6 +19,7 @@ const Login: MiddlewareParams = (req, res) => {
         data,
         message: isLogin ? '登陆成功' : '用户名或密码错误',
         status: isLogin,
+        token,
         statusCode
       });
     })
