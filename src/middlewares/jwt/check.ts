@@ -10,24 +10,31 @@ declare let process: {
 };
 
 export default function (req: RequestWithBody, res: ResponseWithBody, next: NextFunctionWithBody) {
-  let token = req.headers.authorization;
-  if (token) {
-    let decoded: any = jwt.verify(token, process.env.TOKEN_KEY);
-    let date: number = new Date().getTime();
-    if (decoded.exp <= date / 1000) {
+  try {
+    let token = req.headers.authorization;
+    if (token) {
+      let decoded: any = jwt.verify(token, process.env.TOKEN_KEY);
+      let date: number = new Date().getTime();
+      if (decoded.exp <= date / 1000) {
+        res.sendStatus(401);
+        res.json({
+          message: '用户身份过期',
+          detail: 'Unauthenticated.'
+        });
+      } else {
+        req.userId = decoded.userId;
+        next();
+      }
+    } else {
       res.sendStatus(401);
       res.json({
-        message: '用户身份过期',
+        message: '用户未登录',
         detail: 'Unauthenticated.'
       });
-    } else {
-      req.userId = decoded.userId;
-      next();
     }
-  } else {
-    res.sendStatus(401);
+  } catch (err) {
     res.json({
-      message: '用户未登录',
+      message: '用户身份过期',
       detail: 'Unauthenticated.'
     });
   }
