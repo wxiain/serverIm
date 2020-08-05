@@ -18,6 +18,6 @@ export interface ReturnObjectData extends ReturnOperatorData {
 export interface ReturnPageData<T> extends ReturnBaseData {
   data: T[];
   page: number;
-  per_page: number;
+  page_size: number;
   total: number;
 }
