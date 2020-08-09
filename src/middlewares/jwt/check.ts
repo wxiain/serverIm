@@ -16,7 +16,7 @@ export default function (req: RequestWithBody, res: ResponseWithBody, next: Next
       let decoded: any = jwt.verify(token, process.env.TOKEN_KEY);
       let date: number = new Date().getTime();
       if (decoded.exp <= date / 1000) {
-        res.sendStatus(401);
+        res.status(401);
         res.json({
           message: '用户身份过期',
           detail: 'Unauthenticated.'
@@ -26,13 +26,14 @@ export default function (req: RequestWithBody, res: ResponseWithBody, next: Next
         next();
       }
     } else {
-      res.sendStatus(401);
+      res.status(401);
       res.json({
         message: '用户未登录',
         detail: 'Unauthenticated.'
       });
     }
   } catch (err) {
+    res.status(401);
     res.json({
       message: '用户身份过期',
       detail: 'Unauthenticated.'
