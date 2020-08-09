@@ -1,5 +1,5 @@
 import { MiddlewareParams } from '../../types/express.extends';
-import { returnObject, returnPageList } from '../../utils/const';
+import { returnErrorMessage, returnObject, returnPageList } from '../../utils/const';
 import db from '../../database/db';
 
 const searching: MiddlewareParams = function (req, res) {
@@ -13,10 +13,13 @@ const searching: MiddlewareParams = function (req, res) {
   }
   let sql = `SELECT * FROM users WHERE id<>${req.userId} AND (name LIKE '%${keywords}%' OR nickname LIKE '%${keywords}%' OR mobile LIKE '%${keywords}%')`;
   page += 1;
-  db(sql).then((result: any) => {
-    res.status(200);
-    returnPageList({ res, statusCode: 200, data: result, page, page_size, total: 1 });
-  });
+  db(sql)
+    .then((result: any) => {
+      returnPageList({ res, statusCode: 200, data: result, page, page_size, total: 1 });
+    })
+    .catch((err) => {
+      returnErrorMessage({ res, data: err, statusCode: 500 });
+    });
 };
 
 export default searching;

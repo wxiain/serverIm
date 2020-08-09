@@ -1,11 +1,12 @@
 import db from '../../database/db';
 import { MiddlewareParams } from '../../types/express.extends';
-import { returnObject } from '../../utils/const';
+import { returnErrorMessage, returnObject } from '../../utils/const';
 import create from '../../middlewares/jwt/create';
 
 const getUserInfo: MiddlewareParams = function (req, res) {
   db(`SELECT * FROM users WHERE id=${req.userId}`)
     .then((result: any) => {
+      res.status(200);
       let userId = Number(req.userId);
       let token = create({ id: userId });
       let data = result[0];
@@ -20,8 +21,7 @@ const getUserInfo: MiddlewareParams = function (req, res) {
       });
     })
     .catch((err) => {
-      console.log(err);
-      res.json(err);
+      returnErrorMessage({ res, data: err, statusCode: 500 });
     });
 };
 

@@ -1,7 +1,7 @@
 import db from '../../database/db';
 import { MiddlewareParams } from '../../types/express.extends';
 import { UsersLogin } from '../../types/users';
-import { returnObject } from '../../utils/const';
+import { returnObject, returnErrorMessage } from '../../utils/const';
 import create from '../../middlewares/jwt/create';
 
 const Login: MiddlewareParams = (req, res) => {
@@ -13,7 +13,6 @@ const Login: MiddlewareParams = (req, res) => {
       let data = isLogin ? result[0] : {};
       let token = isLogin ? create({ id: data.id }) : '';
       Reflect.deleteProperty(data, 'password');
-      res.status(statusCode);
       returnObject({
         res,
         data,
@@ -24,8 +23,7 @@ const Login: MiddlewareParams = (req, res) => {
       });
     })
     .catch((err) => {
-      console.log(err);
-      res.json(err);
+      returnErrorMessage({ res, data: err, statusCode: 500 });
     });
 };
 
