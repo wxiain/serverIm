@@ -15,6 +15,10 @@ export interface ReturnObjectData extends ReturnOperatorData {
   data: object;
 }
 
+export interface ReturnErrorMessage extends ReturnBaseData {
+  data: object;
+}
+
 export interface ReturnPageData<T> extends ReturnBaseData {
   data: T[];
   page: number;
