@@ -9,6 +9,7 @@ const router = Router();
 
 // router.get('/', Home);
 router.post('/login', UserLogin); // 登录
-router.get('/info', check, getUserInfo); // 获取当前登录用户信息
+// 默认获取当前登录用户信息, 传入userId, 则获取对应的消息
+router.get('/info', check, getUserInfo);
 
 export default router;
