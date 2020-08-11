@@ -6,7 +6,7 @@ import applyList from '../../models/friend/appList';
 
 const router = Router();
 
-router.post('/', check, apply);
-router.get('/list', check, applyList);
+router.post('/', check, apply); // 申请添加好友
+router.get('/list', check, applyList); // 申请添加好友列表
 
 export default router;

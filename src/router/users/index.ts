@@ -8,7 +8,7 @@ import check from '../../middlewares/jwt/check';
 const router = Router();
 
 // router.get('/', Home);
-router.post('/login', UserLogin);
-router.get('/info', check, getUserInfo);
+router.post('/login', UserLogin); // 登录
+router.get('/info', check, getUserInfo); // 获取当前登录用户信息
 
 export default router;
