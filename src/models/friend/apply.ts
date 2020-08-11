@@ -1,6 +1,6 @@
 import { MiddlewareParams } from '../../types/express.extends';
 import db from '../../database/db';
-import { Apply } from '../../types/friends';
+import { Apply } from '../../types/friend';
 import { returnErrorMessage, operatorMessage } from '../../utils/const';
 
 const apply: MiddlewareParams = function (req, res) {
