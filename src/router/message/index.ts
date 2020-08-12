@@ -6,6 +6,6 @@ import check from '../../middlewares/jwt/check';
 const router = Router();
 
 router.get('/home', Message);
-router.get('/links', check, links);
+router.get('/links', check, links); // 聊天列表
 
 export default router;
