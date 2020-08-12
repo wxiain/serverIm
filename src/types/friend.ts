@@ -8,3 +8,7 @@ export interface Apply {
   message: string;
   apply_id: number;
 }
+
+export interface Agree {
+  id: Number;
+}
