@@ -1,42 +1,27 @@
-import jwt, { verify } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
+import analysisToken from './analysisToken';
 import { RequestWithBody, ResponseWithBody, NextFunctionWithBody } from '../../types/express.extends';
 
-// 函数重载, 设置process
-declare let process: {
-  env: {
-    TOKEN_KEY: string;
-    TOKEN_EXPIRES_IN: string;
-  };
-};
-
 export default function (req: RequestWithBody, res: ResponseWithBody, next: NextFunctionWithBody) {
-  try {
-    let token = req.headers.authorization;
-    if (token) {
-      let decoded: any = jwt.verify(token, process.env.TOKEN_KEY);
-      let date: number = new Date().getTime();
-      if (decoded.exp <= date / 1000) {
-        res.status(401);
-        res.json({
-          message: '用户身份过期',
-          detail: 'Unauthenticated.'
-        });
-      } else {
-        req.userId = decoded.userId;
-        next();
-      }
-    } else {
-      res.status(401);
-      res.json({
-        message: '用户未登录',
-        detail: 'Unauthenticated.'
-      });
+  let token = req.headers.authorization;
+  if (token) {
+    let { message, detail, statusCode, userId } = analysisToken(token);
+    userId = userId || 0;
+    if (statusCode === 200) {
+      req.userId = userId;
+      next();
+      return;
     }
-  } catch (err) {
     res.status(401);
     res.json({
-      message: '用户身份过期',
-      detail: 'Unauthenticated.'
+      message,
+      detail
+    });
+  } else {
+    res.status(401);
+    res.json({
+      message: '用户未登录',
+      detail: 'Unauthenticated'
     });
   }
 }
