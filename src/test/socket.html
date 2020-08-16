@@ -5,12 +5,16 @@
   <title>Title</title>
 </head>
 <body>
-<script src="https://cdn.bootcdn.net/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+<script src="./lib/socket.js"></script>
 <script>
-  let socket = io('http://localhost:7001?token=2222');
-  socket.on('connect', () => {
-    console.log('连接');
+  let socket = io('ws://localhost:7001');
+  socket.on('errors', data => {
+    console.log(data);
   })
+  socket.on('send', data => {
+    console.log(data);
+  })
+  socket.emit('receive', 222222);
 </script>
 </body>
 </html>
