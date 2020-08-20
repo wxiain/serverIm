@@ -17,7 +17,7 @@ export default function (token: string): AnalysisToken {
   try {
     let decoded: any = jwt.verify(token, process.env.TOKEN_KEY);
     let date: number = new Date().getTime();
-    if (decoded.exp <= date / 1000) {
+    if (decoded.exp >= date / 1000) {
       return {
         statusCode: 200,
         userId: decoded.userId
