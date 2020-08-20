@@ -13,9 +13,9 @@ const messages: MiddlewareParams = function (req, res) {
   let page = Number(query.page || '1') - 1;
   let page_size = Number(query.page_size || process.env.PAGE_SIZE);
   let sql = `SELECT * FROM messages WHERE userId=${req.userId} ORDER BY id LIMIT ${page},${page_size}`;
-  db(sql)
+  db(sql, true)
     .then((result: any) => {
-      returnPageList({ res, statusCode: 200, total: 0, data: result, page_size, page: page + 1 });
+      returnPageList({ res, statusCode: 200, total: result.total, data: result.data, page_size, page: page + 1 });
     })
     .catch((err) => {
       returnErrorMessage({ res, statusCode: 500, data: err });
