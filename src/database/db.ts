@@ -1,16 +1,5 @@
-import mysql, { PoolConfig, MysqlError, PoolConnection } from 'mysql';
-const config = process.env;
-const mysqlConfig: PoolConfig = {
-  host: config.DATA_HOST,
-  port: Number(config.DATA_PORT),
-  user: config.DATA_USER,
-  password: config.DATA_PASSWORD,
-  database: config.DATA_DATABASE,
-  acquireTimeout: Number(config.DATA_ACQUIRE_TIMEOUT),
-  connectionLimit: Number(config.DATA_CONNECTION_LIMIT),
-  waitForConnections: Boolean(config.DATA_WAIT_FOR_CONNECTIONS),
-  queueLimit: Number(config.DATA_QUEUE_LIMIT)
-};
+import mysql, { MysqlError, PoolConnection } from 'mysql';
+import {mysqlConfig} from './config'
 
 const pool = mysql.createPool(mysqlConfig);
 

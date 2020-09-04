@@ -7,7 +7,8 @@
     "build": "tsc -w",
     "start": "dotenv -e .env -e .env.mysql nodemon build/app.js",
     "start:prod": "dotenv -e .env -e .env.mysql node build/app.js",
-    "server": "concurrently npm:build npm:start"
+    "server": "concurrently npm:build npm:start",
+    "create:tables": "dotenv -e .env -e .env.mysql node build/database/create.js"
   },
   "keywords": [],
   "author": "",
