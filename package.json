@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc -w",
+    "build": "tsc",
+    "dev": "tsc -w",
     "start": "dotenv -e .env -e .env.mysql nodemon build/app.js",
     "start:prod": "dotenv -e .env -e .env.mysql node build/app.js",
-    "server": "concurrently npm:build npm:start",
+    "server": "concurrently npm:dev npm:start",
     "create:tables": "dotenv -e .env -e .env.mysql node build/database/create.js"
   },
   "keywords": [],
