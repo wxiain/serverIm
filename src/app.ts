@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // parse application/json
 app.use(bodyParser.json());
 
-app.use(router);
+app.use('/im', router);
 
 let server: Server = app.listen(process.env.PORT, () => {
   console.log(process.env.PORT + '服务启动成功');
