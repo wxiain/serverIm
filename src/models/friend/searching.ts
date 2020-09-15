@@ -11,7 +11,12 @@ const searching: MiddlewareParams = function (req, res) {
     returnObject({ res, statusCode: 400, status: false, message: '请输入关键字以检索', data: [] });
     return;
   }
-  let sql = `SELECT * FROM users WHERE id<>${req.userId} AND (useranme LIKE '%${keywords}%' OR mobile LIKE '%${keywords}%') ORDER BY id LIMIT ${page},${page_size}`;
+  let sql = `SELECT id,username,nickname,mobile,gender,age,avatar,address
+    FROM users 
+    WHERE id<>${req.userId} 
+    AND instr(username, '${keywords}') > 0 
+    OR instr(mobile, '${keywords}') > 0 
+    ORDER BY id LIMIT ${page},${page_size}`;
   db(sql, true)
     .then((result: any) => {
       returnPageList({ res, statusCode: 200, total: result.total, data: result.data, page: page + 1, page_size });
