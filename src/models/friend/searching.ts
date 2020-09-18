@@ -16,7 +16,7 @@ const searching: MiddlewareParams = function (req, res) {
     WHERE id<>${req.userId} 
     AND (instr(username, '${keywords}') > 0 
     OR instr(mobile, '${keywords}') > 0) 
-    ORDER BY id LIMIT ${Math.max(0, page -1)*page_size },${page_size}`;
+    ORDER BY id LIMIT ${Math.max(0, page - 1) * page_size},${page_size}`;
   db(sql, true)
     .then((result: any) => {
       returnPageList({ res, statusCode: 200, total: result.total, data: result.data, page, page_size });
