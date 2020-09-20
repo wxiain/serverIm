@@ -11,12 +11,12 @@ const searching: MiddlewareParams = function (req, res) {
     returnObject({ res, statusCode: 400, status: false, message: '请输入关键字以检索', data: [] });
     return;
   }
-  let sql = `SELECT id,username,nickname,mobile,gender,age,avatar,address
-    FROM users 
-    WHERE id<>${req.userId} 
-    AND (instr(username, '${keywords}') > 0 
-    OR instr(mobile, '${keywords}') > 0) 
-    ORDER BY id LIMIT ${Math.max(0, page - 1) * page_size},${page_size}`;
+  let sql = `SELECT DISTINCT users.id,users.username,users.nickname,users.mobile,users.gender,users.age,users.avatar,users.address
+    FROM users LEFT JOIN friends
+    ON users.id<>${req.userId} 
+    AND users.id <> friends.relation_id
+    AND (instr(users.username, '${keywords}') > 0 OR instr(users.mobile, '${keywords}') > 0)
+    ORDER BY users.id LIMIT ${Math.max(0, page - 1) * page_size},${page_size}`;
   db(sql, true)
     .then((result: any) => {
       returnPageList({ res, statusCode: 200, total: result.total, data: result.data, page, page_size });
