@@ -6,9 +6,15 @@ export function propEmpty(val: any): boolean {
 }
 
 export function createValues(object: object): string {
-  let key = Object.keys(object).join(',');
-  let values = Object.values(object).join(',');
-  return `(${key}) VALUES (${values})`;
+  let keys = '';
+  let values = '';
+  for (let [key, val] of Object.entries(object)) {
+    if (propEmpty(val)) {
+      values += (typeof val === 'string' ? `\'${val}\'` : val) + ',';
+      keys += key + ',';
+    }
+  }
+  return `(${keys.substr(0, keys.length - 1)}) VALUES (${values.substr(0, values.length - 1)})`;
 }
 
 export function updateValues(object: object): string {
