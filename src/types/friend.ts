@@ -1,5 +1,5 @@
 export interface Apply {
-  name: string;
+  username: string;
   nickname: string;
   avatar: string;
   age: number;
