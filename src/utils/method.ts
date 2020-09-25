@@ -9,10 +9,8 @@ export function createValues(object: object): string {
   let keys = '';
   let values = '';
   for (let [key, val] of Object.entries(object)) {
-    if (propEmpty(val)) {
-      values += (typeof val === 'string' ? `\'${val}\'` : val) + ',';
-      keys += key + ',';
-    }
+    values += (typeof val === 'string' ? `\'${val}\'` : val) + ',';
+    keys += key + ',';
   }
   return `(${keys.substr(0, keys.length - 1)}) VALUES (${values.substr(0, values.length - 1)})`;
 }
