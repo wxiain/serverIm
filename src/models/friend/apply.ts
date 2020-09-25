@@ -18,9 +18,9 @@ const apply: MiddlewareParams = function (req, res) {
       return;
     }
   }
-  let sql = `INSERT INTO proposers ${createValues({ ...body, user_id: req.userId })} ON DUPLICATE KEY UPDATE message=${
+  let sql = `INSERT INTO proposers ${createValues({ ...body, user_id: req.userId })} ON DUPLICATE KEY UPDATE message='${
     body.message
-  }`;
+  }'`;
   db(sql)
     .then((result) => {
       operatorMessage({ res, status: true, statusCode: 200, message: '申请信息已发送, 请等待对方同意' });
