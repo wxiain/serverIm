@@ -1,6 +1,7 @@
 import db from '../../database/db';
 import { MiddlewareParams } from '../../types/express.extends';
 import { returnPageList, returnErrorMessage } from '../../utils/const';
+import { pagination } from '../../utils/method';
 
 declare let process: {
   env: {
@@ -10,12 +11,16 @@ declare let process: {
 
 const applyList: MiddlewareParams = function (req, res) {
   let query = req.query;
-  let page: number = Number(query.page || '1') - 1;
+  let page: number = Number(query.page || '0');
   let page_size: number = Number(query.page_size || process.env.PAGE_SIZE);
-  let sql = `SELECT * FROM proposers WHERE apply_id = ${req.userId} ORDER BY id LIMIT ${page},${page_size}`;
-  db(sql)
+  let sql =
+    `SELECT * 
+    FROM proposers 
+    WHERE user_id=${req.userId} AND 'status'<>'agreement' 
+    ORDER BY id LIMIT` + pagination(page, page_size);
+  db(sql, true)
     .then((result: any) => {
-      returnPageList({ data: result, statusCode: 200, page_size, page: page + 1, res, total: 0 });
+      returnPageList({ data: result, statusCode: 200, page_size, page, res, total: result.total });
     })
     .catch((err) => {
       returnErrorMessage({ res, statusCode: 500, data: err });
