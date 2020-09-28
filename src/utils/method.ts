@@ -26,5 +26,5 @@ export function updateValues(object: object): string {
 }
 
 export function pagination(page: number, page_size: number): string {
-  return `${Math.max(0, page - 1) * page_size},${page_size}`;
+  return ` ${Math.max(0, page - 1) * page_size},${page_size}`;
 }
