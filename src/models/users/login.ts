@@ -16,7 +16,7 @@ const Login: MiddlewareParams = (req, res) => {
       return;
     }
   }
-  db(`SELECT * FROM users WHERE username=${params.username} AND password=${params.password}`)
+  db(`SELECT * FROM users WHERE username='${params.username}' AND password=${params.password}`)
     .then((result: any) => {
       let isLogin = !!result.length;
       let statusCode = isLogin ? 200 : 401;
