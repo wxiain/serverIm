@@ -14,9 +14,9 @@ const myList: MiddlewareParams = function (req, res) {
   let page_size = Number(query.page_size || process.env.PAGE_SIZE);
   let sql = `SELECT * FROM friends WHERE user_id = ${req.userId} ORDER BY id LIMIT ${page},${page_size}`;
   page = page + 1;
-  db(sql)
+  db(sql, true)
     .then((result: any) => {
-      returnPageList({ res, page, page_size, data: result, total: 0, statusCode: 200 });
+      returnPageList({ res, page, page_size, data: result.data, total: result.total, statusCode: 200 });
     })
     .catch((err) => {
       returnErrorMessage({ res, statusCode: 500, data: err });

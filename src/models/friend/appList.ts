@@ -20,7 +20,7 @@ const applyList: MiddlewareParams = function (req, res) {
     ORDER BY id LIMIT` + pagination(page, page_size);
   db(sql, true)
     .then((result: any) => {
-      returnPageList({ data: result, statusCode: 200, page_size, page, res, total: result.total });
+      returnPageList({ data: result.data, statusCode: 200, page_size, page, res, total: result.total });
     })
     .catch((err) => {
       returnErrorMessage({ res, statusCode: 500, data: err });
