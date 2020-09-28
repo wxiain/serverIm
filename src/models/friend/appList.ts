@@ -16,7 +16,7 @@ const applyList: MiddlewareParams = function (req, res) {
   let sql =
     `SELECT * 
     FROM proposers 
-    WHERE user_id=${req.userId} AND 'status'<>'agreement' 
+    WHERE apply_id=${req.userId} AND 'status'<>'agreement' 
     ORDER BY id LIMIT` + pagination(page, page_size);
   db(sql, true)
     .then((result: any) => {

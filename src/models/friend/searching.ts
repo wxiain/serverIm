@@ -2,11 +2,17 @@ import { MiddlewareParams } from '../../types/express.extends';
 import { returnErrorMessage, returnObject, returnPageList } from '../../utils/const';
 import db from '../../database/db';
 
+declare let process: {
+  env: {
+    PAGE_SIZE: string;
+  };
+};
+
 const searching: MiddlewareParams = function(req, res) {
   let query = req.query;
   let keywords = query.keywords;
   let page = Number(query.page || '0');
-  let page_size = Number(query.page_size || '10');
+  let page_size = Number(query.page_size || process.env.PAGE_SIZE);
   if (!keywords) {
     returnObject({ res, statusCode: 400, status: false, message: '请输入关键字以检索', data: [] });
     return;
