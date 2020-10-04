@@ -8,7 +8,7 @@ declare let process: {
   };
 };
 
-const searching: MiddlewareParams = function(req, res) {
+const searching: MiddlewareParams = function (req, res) {
   let query = req.query;
   let keywords = query.keywords;
   let page = Number(query.page || '0');
