@@ -5,12 +5,13 @@ import { returnPageList, returnErrorMessage } from '../../utils/const';
 declare let process: {
   env: {
     PAGE_SIZE: string;
+    PAGE: string;
   };
 };
 
 const messages: MiddlewareParams = function (req, res) {
   let query = req.query;
-  let page = Number(query.page || '1') - 1;
+  let page = Number(query.page || process.env.PAGE);
   let page_size = Number(query.page_size || process.env.PAGE_SIZE);
   let sql = `SELECT * FROM messages WHERE userId=${req.userId} ORDER BY id LIMIT ${page},${page_size}`;
   db(sql, true)

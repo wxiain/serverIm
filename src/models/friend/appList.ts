@@ -6,12 +6,13 @@ import { pagination } from '../../utils/method';
 declare let process: {
   env: {
     PAGE_SIZE: string;
+    PAGE: string;
   };
 };
 
 const applyList: MiddlewareParams = function (req, res) {
   let query = req.query;
-  let page: number = Number(query.page || '0');
+  let page: number = Number(query.page || process.env.PAGE);
   let page_size: number = Number(query.page_size || process.env.PAGE_SIZE);
   let sql =
     `SELECT * 

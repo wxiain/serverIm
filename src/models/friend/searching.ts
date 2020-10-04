@@ -5,19 +5,20 @@ import db from '../../database/db';
 declare let process: {
   env: {
     PAGE_SIZE: string;
+    PAGE: string;
   };
 };
 
 const searching: MiddlewareParams = function (req, res) {
   let query = req.query;
   let keywords = query.keywords;
-  let page = Number(query.page || '0');
+  let page = Number(query.page || process.env.PAGE);
   let page_size = Number(query.page_size || process.env.PAGE_SIZE);
   if (!keywords) {
     returnObject({ res, statusCode: 400, status: false, message: '请输入关键字以检索', data: [] });
     return;
   }
-  let sql = `SELECT users.id,users.username,users.nickname,users.mobile,users.gender,users.age,users.avatar,users.address
+  let sql = `SELECT DISTINCT users.id,users.username,users.nickname,users.mobile,users.gender,users.age,users.avatar,users.address
     FROM users LEFT JOIN friends
     ON users.id <> friends.relation_id
     WHERE users.id<>${req.userId}
