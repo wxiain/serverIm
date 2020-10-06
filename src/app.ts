@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import router from './router';
 import { Server } from 'http';
-import Socket from './models/sokcet';
+import Ws from './models/websocket';
 
 const app = express();
 // app.use(cors());
@@ -28,4 +28,4 @@ let server: Server = app.listen(process.env.PORT, () => {
   console.log(process.env.PORT + '服务启动成功');
 });
 
-new Socket(server);
+new Ws(server);
