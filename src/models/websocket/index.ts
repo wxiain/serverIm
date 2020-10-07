@@ -4,6 +4,7 @@ import { Server as HttpServer } from 'http';
 import { createValues } from '../../utils/method';
 import analysisToken from '../../middlewares/jwt/analysisToken';
 import { IncomingMessage } from '../../types/http.extends';
+import { sortReturnString } from '../../utils/method';
 import db from '../../database/db';
 
 function transferToString(data: any): string {
@@ -60,8 +61,14 @@ class Ws {
       this.returnMessage(data.send_id, data);
       this.send(data.receive_id, data);
     });
+    let obj2 = {
+      message: data.message,
+      ids: sortReturnString(data.send_id, data.receive_id),
+      user: JSON.stringify(data.user),
+      receive: JSON.stringify(data.receive)
+    };
     db(
-      `INSERT INTO links ${createValues(data)} 
+      `INSERT INTO links ${createValues(obj2)} 
         ON DUPLICATE KEY UPDATE message='${data.message}',unread_count=IF(unread_count IS NULL, 1, unread_count+1)`
     ).catch((err) => {
       console.log(err);

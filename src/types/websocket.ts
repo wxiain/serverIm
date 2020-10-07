@@ -10,18 +10,14 @@ export interface UserOnline {
  * @params {Number} send_id 发送id
  * @params {Number} receive_id 接收id
  * @params {Number} message_id  消息id
- * @params {String} nickname  发送方昵称
- * @params {String} username  发送方用户名
- * @params {String} avatar  发送方头像
- * @params {String} gender  发送方性别
+ * @params {Object} user 发送方
+ * @params {Object} receive 接收方
  */
 export interface Message {
   message: string;
   send_id: number;
   receive_id: number;
   message_id?: number;
-  nickname: string;
-  username: string;
-  avatar: string;
-  gender: string;
+  user?: object;
+  receive?: object;
 }
