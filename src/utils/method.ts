@@ -28,3 +28,8 @@ export function updateValues(object: object): string {
 export function pagination(page: number, page_size: number): string {
   return ` ${Math.max(0, page - 1) * page_size},${page_size}`;
 }
+
+export function sortReturnString(n1: number, n2: number): string {
+  let array: number[] = [n1, n2].sort((a, b) => a - b);
+  return array.join(',');
+}
